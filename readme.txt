@@ -1,0 +1,30 @@
+生产镜像
+docker build -t see:test .
+
+运行容器
+docker run -d see:test
+如需连接外部服务器及配置邮箱 添加相关环境变量
+example： -e "MYSQL_HOST=**.**.**.**"
+
+环境变量
+mysql 
+    MYSQL_HOST #mysql IP地址
+    MYSQL_PORT #mysql 服务端口
+    MYSQL_USER #登陆用户
+    MYSQL_PASSWORD #登陆密码
+
+redis
+    REDIS_HOST #redis ip地址 
+    REDIS_PORT #redis 服务端口
+邮箱
+    SMTP_HOST #邮箱smtp地址
+    SMTP_PORT #邮箱smtp端口
+    MAIL_USER #邮箱账号
+    MAIL_PASS #邮箱密码
+    SEE_ADDR #see访问地址（一般是服务器地址）
+
+
+
+访问see **.**.**.**:80 
+初始账号密码 admin/123456
+mysql 初始账号密码 root/123456
