@@ -2,7 +2,8 @@ FROM centos
 
 COPY ./files/Percona-Server-5.6.41-84.1-rb308619-el7-x86_64-bundle.tar /tmp/
 RUN yum -y install epel-release
-RUN yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-python wget make unzip autoconf numactl-libs readline readline-devel gcc gcc-c++ zlib zlib-devel openssl openssl-devel sqlite-devel python-devel libaio-devel libffi-devel glib2 glib2-devel nginx redis expect vim \
+RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
+    && yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-python wget make unzip autoconf numactl-libs readline readline-devel gcc gcc-c++ zlib zlib-devel openssl openssl-devel sqlite-devel python-devel libaio-devel libffi-devel glib2 glib2-devel nginx redis expect vim \
     && cd /tmp \
     && wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz \
     && tar -zxvf bison-2.5.1.tar.gz \
