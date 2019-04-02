@@ -23,7 +23,9 @@ redis
     MAIL_PASS #邮箱密码
     SEE_ADDR #see访问地址（一般是服务器地址）
 
-
+系统设置
+inception_enable_identifer_keyword开启
+平台设置-Inception设置-inception_enable_identifer_keyword 开启
 
 访问see **.**.**.**:80 
 初始账号密码 admin/Hu224514
