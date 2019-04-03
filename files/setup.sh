@@ -77,6 +77,8 @@ python manage.py makemigrations
 sleep 10
 python manage.py migrate
 sleep 30
+python manage.py migrate
+sleep 30
 nohup python manage.py celery worker -c 10 -B --loglevel=info &
 gunicorn -c sqlweb/gunicorn_config.py sqlweb.wsgi
 
