@@ -66,7 +66,7 @@ sed -i "s/'mail_pass': 'see123',/'mail_pass': '$MAIL_PASS',/g" /usr/local/seeven
 if [ -z $SEE_ADDR ];then
    SEE_ADDR='http://xxx.xxx.xxx.xxx:81'
 fi
-sed -i "s/'see_addr': 'http://xxx.xxx.xxx.xxx:81',/'see_addr': '$SEE_ADDR',/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
+sed -i "s/'see_addr': 'http:\/\/xxx.xxx.xxx.xxx:81',/'see_addr': 'http:\/\/$SEE_ADDR',/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
 
 nohup /usr/local/inception-master/builddir/mysql/bin/Inception --defaults-file=/etc/inc.cnf &
 mysql -h $MYSQL_HOST -P$MYSQL_PORT -u$MYSQL_USER -p$MYSQL_PASSWORD -e "create database If Not Exists sqlweb CHARACTER SET utf8;"
