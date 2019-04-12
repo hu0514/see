@@ -2,8 +2,7 @@ FROM centos
 
 COPY ./files/Percona-Server-5.6.41-84.1-rb308619-el7-x86_64-bundle.tar /tmp/
 RUN yum -y install epel-release
-RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
-    && yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-python wget make unzip autoconf numactl-libs readline readline-devel gcc gcc-c++ zlib zlib-devel openssl openssl-devel sqlite-devel python-devel libaio-devel libffi-devel glib2 glib2-devel nginx redis expect vim \
+RUN yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-python wget make unzip autoconf numactl-libs readline readline-devel gcc gcc-c++ zlib zlib-devel openssl openssl-devel sqlite-devel python-devel libaio-devel libffi-devel glib2 glib2-devel nginx redis expect vim \
     && cd /tmp \
     && wget http://ftp.gnu.org/gnu/bison/bison-2.5.1.tar.gz \
     && tar -zxvf bison-2.5.1.tar.gz \
@@ -11,7 +10,7 @@ RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && ./configure \
     && make \
     && make install \
-    && cd /tmp \
+    && cd /tmp/ \
     && wget https://github.com/myide/inception/archive/master.zip \
     && unzip master.zip \
     && mv inception-master /usr/local/ \
@@ -40,7 +39,7 @@ RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && echo "inception_ddl_support=1">> /etc/inc.cnf \
     && echo "inception_enable_blob_type=1">> /etc/inc.cnf \ 
     && echo "inception_check_column_default_value=1">> /etc/inc.cnf \
-    && cd /tmp \
+    && cd /tmp/ \
     && wget https://codeload.github.com/Meituan-Dianping/SQLAdvisor/zip/master \
     && unzip master \
     && mv SQLAdvisor-master /usr/local/src/ \
@@ -92,6 +91,8 @@ RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
     && sed -i '38,57d' /etc/nginx/nginx.conf \
     && sed -i -e "/include \/etc\/nginx\/conf.d\/\*.conf;/a\server\n  {\n listen 80;\n access_log    \/var\/log\/access.log;\n error_log    \/var\/log\/error.log;\n location \/ {\n root \/usr\/local\/seevenv\/see-master\/frontend\/dist\/;\n try_files \$uri \$uri\/ \/index.html =404; \n index  index.html;  \n  } \n location \/static\/rest_framework_swagger {\n root \/usr\/local\/seevenv\/lib\/python3.6\/site-packages\/rest_framework_swagger\/;\n  } \n location \/static\/rest_framework { \n root \/usr\/local\/seevenv\/lib\/python3.6\/site-packages\/rest_framework\/; \n } \n location \/api { \n proxy_pass http:\/\/127.0.0.1:8090; \n add_header Access-Control-Allow-Origin \*; \n add_header Access-Control-Allow-Headers Content-Type; \n add_header Access-Control-Allow-Headers \"Origin, X-Requested-With, Content-Type, Accept\"; \n add_header Access-Control-Allow-Methods \"GET, POST, OPTIONS, PUT, DELETE, PATCH\"; \n } \n }\n" /etc/nginx/nginx.conf \
     && echo "/usr/bin/mysqld_safe &" >/tmp/mysql.sh \
+    && sed -i -e '/\[mysqld\]/a\binlog_format = row' /etc/my.cnf \
+    && sed -i -e '/\[mysqld\]/a\log_bin = mysql-bin' /etc/my.cnf \
     && /bin/bash /tmp/mysql.sh \
     && sleep 3 \
     && mysqladmin -uroot password 123456 \
@@ -101,7 +102,15 @@ RUN \cp -f /usr/share/zoneinfo/Asia/Shanghai /etc/localtime \
 COPY ./files/setup.sh /mnt/
 RUN chmod 755 /mnt/setup.sh \
     && sed -i 353d /usr/local/seevenv/lib/python3.6/site-packages/pymysql/cursors.py \
-    && sed -i '/if not self._defer_warnings:/a\            pass' /usr/local/seevenv/lib/python3.6/site-packages/pymysql/cursors.py
+    && sed -i '/if not self._defer_warnings:/a\            pass' /usr/local/seevenv/lib/python3.6/site-packages/pymysql/cursors.py \
+    && yum install -y perl-DBI perl-DBD-MySQL perl-TermReadKey perl-IO-Socket-SSL.noarch \
+    && rpm -ivh http://www.rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/perl-Digest-1.17-245.el7.noarch.rpm \
+    && rpm -ivh http://mirror.centos.org/centos/7/os/x86_64/Packages/perl-Digest-MD5-2.52-3.el7.x86_64.rpm \
+    && rpm -ivh https://www.percona.com/downloads/percona-toolkit/3.0.8/binary/redhat/7/x86_64/percona-toolkit-3.0.8-1.el7.x86_64.rpm \
+    && yum clean all
+ENV LANG en_US.UTF-8
+ENV LANGUAGE en_US:en
+ENV LC_ALL en_US.UTF-8
 ENTRYPOINT ["/mnt/setup.sh"]
 
 
