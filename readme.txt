@@ -45,6 +45,8 @@ redis
 系统设置
 inception_enable_identifer_keyword开启
 平台设置-Inception设置-inception_enable_identifer_keyword 开启
+修改update最大行数
+在 /etc/inc.cnf中添加 inception_max_update_rows=1000000
 
 访问see **.**.**.**:80 
 初始账号密码 admin/Hu224514
