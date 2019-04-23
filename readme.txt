@@ -43,8 +43,14 @@ redis
     SEE_ADDR #see访问地址（一般是服务器地址,不要带http: 只写域名a.b.com）
 
 系统设置
-inception_enable_identifer_keyword开启
-平台设置-Inception设置-inception_enable_identifer_keyword 开启
+
+平台设置-Inception设置
+inception_enable_identifer_keyword 开启 （检查在SQL语句中，是不是有标识符被写成MySQL的关键字，默认值为报警。）
+inception_enable_column_charset 开启 （允许列自己设置字符集）
+inception_merge_alter_table 关闭 （在多个改同一个表的语句出现是，报错，提示合成一个）
+inception_check_column_default_value  关闭 （检查在建表、修改列、新增列时，新的列属性是不是要有默认值）
+inception_enable_nullable 开启 （创建或者新增列时如果列为NULL，是不是报错）
+
 修改update最大行数
 在 /etc/inc.cnf中添加 inception_max_update_rows=1000000
 
