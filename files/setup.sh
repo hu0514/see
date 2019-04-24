@@ -33,14 +33,15 @@ if [ -z $REDIS_HOST ];then
    REDIS_HOST='127.0.0.1'  
    /usr/bin/redis-server &
 fi
-sed -i "s/'host': '127.0.0.1',/'host': '$REDIS_HOST',/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
+sed -i "s/REDIS_HOST = '127.0.0.1'/REDIS_HOST = '$REDIS_HOST'/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
 
 if [ -z $REDIS_PORT ];then
    REDIS_PORT='6379'
 fi
-sed -i "s/'port': 6379,/'port': $REDIS_PORT,/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
-sed -i "s/BROKER_URL = 'redis:\/\/127.0.0.1:6379\/0'/BROKER_URL = 'redis:\/\/$REDIS_HOST:$REDIS_PORT\/0'/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
-sed -i "s/CELERY_RESULT_BACKEND = 'redis:\/\/127.0.0.1:6379\/1'/CELERY_RESULT_BACKEND = 'redis:\/\/$REDIS_HOST:$REDIS_PORT\/1'/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
+sed -i "s/REDIS_PORT = 6379/REDIS_PORT = $REDIS_PORT/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
+
+sed -i "s/REDIS_PASSWORD = ''/REDIS_PASSWORD = '$REDIS_PASSWORD'/g" /usr/local/seevenv/see-master/backend/sqlweb/settings.py
+
 
 #mail
 if [ -z $SMTP_HOST ];then

@@ -39,6 +39,7 @@ RUN yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-py
     && echo "inception_ddl_support=1">> /etc/inc.cnf \
     && echo "inception_enable_blob_type=1">> /etc/inc.cnf \ 
     && echo "inception_check_column_default_value=1">> /etc/inc.cnf \
+    && echo "inception_max_update_rows=10000000">> /etc/inc.cnf \
     && cd /tmp/ \
     && wget https://codeload.github.com/Meituan-Dianping/SQLAdvisor/zip/master \
     && unzip master \
@@ -93,6 +94,7 @@ RUN yum -y install cmake  gcc gcc-c++ openssl-devel ncurses-devel mysql MySQL-py
     && echo "/usr/bin/mysqld_safe &" >/tmp/mysql.sh \
     && sed -i -e '/\[mysqld\]/a\binlog_format = row' /etc/my.cnf \
     && sed -i -e '/\[mysqld\]/a\log_bin = mysql-bin' /etc/my.cnf \
+    && sed -i -e '/\[mysqld\]/a\server-id = 100' /etc/my.cnf \
     && /bin/bash /tmp/mysql.sh \
     && sleep 3 \
     && mysqladmin -uroot password 123456 \
