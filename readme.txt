@@ -10,16 +10,16 @@ docker run -d \
         --network=lnmp_net \
         --log-opt max-size=100m \
         --log-opt max-file=5 \
-        -v /etc/timezone:/etc/timezone \ 
+        -v /etc/timezone:/etc/timezone \
         -v /etc/localtime:/etc/localtime \
         -e "MYSQL_HOST=lnmp-mysql-5.7" \
         -e "MYSQL_PORT=3306" \
         -e "MYSQL_USER=root" \
-        -e "MYSQL_PASSWORD=b4V56GLnrvov" \
+        -e "MYSQL_PASSWORD=*********" \
         -e "SMTP_HOST=smtp.qiye.aliyun.com" \
         -e "SMTP_PORT=465" \
         -e "MAIL_USER=admin@runxsports.com" \
-        -e "MAIL_PASS=bDv7cAQNIH1j" \
+        -e "MAIL_PASS=*********" \
         -e "SEE_ADDR=see.runxsports.com" \
         18817810841/see:test
 如需连接外部服务器及配置邮箱 添加相关环境变量
