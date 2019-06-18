@@ -54,6 +54,9 @@ inception_enable_nullable 开启 （创建或者新增列时如果列为NULL，�
 修改update最大行数
 在 /etc/inc.cnf中添加 inception_max_update_rows=1000000
 
+修改nginx上传大小
+在/etc/nginx/nginx.conf的server中添加client_max_body_size 20M;
+
 访问see **.**.**.**:80 
 初始账号密码 admin/Hu224514
 mysql 初始账号密码 root/123456
